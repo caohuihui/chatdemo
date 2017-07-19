@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="js/plugins/layer/skin/layer.css"/>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <script src="js/plugins/Respond-master/dest/respond.min.js"></script>
+    <![endif]-->
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div style="margin-top: 50px">
+
+
+
+            </div>
+            <h3>欢迎使用 请登录</h3>
+
+            <form class="m-t" role="form" >
+                <div class="form-group">
+                  <input type="email" class="form-control" placeholder="请输入邮箱email" id="newEmail" required data-vaild="^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$" data-errmsg="邮箱不正确" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="密码" required="" data-vaild="^[a-zA-Z0-9]{6,16}$" id="password" data-errmsg="密码不正确，请输入6-16位数字或字母">
+                </div>
+
+                <input type="button" class="btn btn-primary" style="width: 100%;margin-bottom: 15px" id="loginSubmit" value="登 录"/>
+
+                <p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register.html">注册一个新账号</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/layer/layer.js"></script>
+    <script src="js/Bootstrap_popover.js"></script>
+    <script src="js/plugins/web-storage-cache-master/web-storage-cache.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+          $("form").Vaild();
+
+          let lS = document.getElementById('loginSubmit');
+          console.log('loginS', lS);
+          if (lS.addEventListener) {
+            console.log('ffff');
+            lS.addEventListener('click', loginS, false);
+          } else {
+            console.log('eeeee');
+            lS.attachEvent('onclick', loginS, false);
+          }
+            /*$("#loginSubmit").click(function() {
+
+
+              if ($('#userName').val() !== '' && $('#password').val() !== ''&& /^[a-zA-Z0-9]{6,16}$/.test($("#password").val())) {
+                console.log('aaaaa')
+                window.location = "index.html"
+              }
+            });*/
+        });
+
+        function loginS () {
+          if ($('#newEmail').val() === '') {
+            $('#newEmail').parent().addClass("has-error").removeClass("has-success");
+            $('#newEmail').data("toogle", "top").data("placement", "top").data("container", "body").data("content", '请输入Email').popover({"trigger":"manual"}).popover("show");
+            return
+          }
+          if ($('#password').val() === '') {
+            $('#password').parent().addClass("has-error").removeClass("has-success");
+            $('#password').data("toogle", "top").data("placement", "top").data("container", "body").data("content", '请输入密码').popover({"trigger":"manual"}).popover("show");
+            return
+          }
+          if ($('#newEmail').val() !== '' && $('#password').val() !== ''&& /^[a-zA-Z0-9]{6,16}$/.test($("#password").val()) && /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test($("#newEmail").val())) {
+            $.ajax({
+//              url: 'http://devs.lumen.com/api/user/login',
+              url: 'http://www.51daxuetong.cn/api/user/login',
+              type:'POST',
+              data:{
+                email: $('#newEmail').val(),
+                password: $('#password').val()
+              },
+              dataType:'json',
+              withCredentials:true,
+              success:function(msg){
+                console.log('msg', msg);
+                if (msg.status_code === 200) {
+                  let m = msg;
+                  userDetail(m);
+                  /*let iminfo = {
+                    imId: '10002',
+                    imSig: 'eJxlzkFPgzAYxvE7n6LhqtHSUnAmHgiro8k2olOTeWmgLaxhY9BVHTF*dydqbOJ7-f2T5333AAD*w3x1UQixf2ktt0OnfHANfOif-2HXackLy7GR-1AdO20ULyqrzIgBIQRB6DZaqtbqSv8WJ0UOH2TDx41vDU*McRBO3ETXIy7oY8rSXl5usnxFb2Mx7UlCYdnatOzQU2bMEa7r7Xq3odPniEWJpgnaxkXGelHmYqirfFEvB0Oas-t4mJG72tI5Q7M3ubxiqLlxJq3eqZ*HJjEOI0Tcn1*VOeh9OwYIBiRAGH6d7314n-FxW4U_',
+                    userId: m.data.id,
+                    token: m.data.token
+                  };
+                  localStorage.setItem('users', JSON.stringify(iminfo));
+                  window.location = "views/index.html";*/
+                }else {
+                  layer.msg(msg.message)
+                }
+              },
+              error:function(XMLHttpRequest, textStatus, errorThrown){
+                console.log("获取失败，请重试！CODE:"+XMLHttpRequest.status)
+                layer.msg("获取失败，请重试！CODE:"+XMLHttpRequest.status)
+              }
+            });
+
+          }
+        }
+
+      function userDetail (m) {
+        let wsCache = new WebStorageCache();
+        console.log('wsCache', wsCache)
+        let nextDay = new Date()
+        nextDay.setDate(nextDay.getDate() + 1)
+        console.log('nextDay', nextDay)
+        $.ajax({
+//                    url: 'http://devs.lumen.com/api/user/detail',
+          url: 'http://www.51daxuetong.cn/api/user/detail',
+          type: 'POST',
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + m.data.token);
+          },
+          /*headers: {
+            'Authorization': 'Bearer ' + m.data.token
+          },*/
+          withCredentials: true,
+          dataType: 'json',
+          success: function (msg) {
+            if (msg.status_code === 200) {
+              let iminfo = {
+                imId: msg.data.id,
+                imSig: msg.data.user_sig,
+                userId: m.data.id,
+                token: m.data.token
+              };
+//              localStorage.setItem('users', JSON.stringify(iminfo));
+              wsCache.set('users', iminfo, {exp: nextDay})
+              window.location = "views/index.html";
+             // window.location = "views/living_demo.html";
+            }
+          }
+        })
+      }
+
+    </script>
+
+    <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+    <!--统计代码，可删除-->
+
+</body>
+
+</html>

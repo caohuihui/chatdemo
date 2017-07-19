@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="shortcut icon" href="../favicon.ico"> <link href="../assets/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../assets/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../assets/css/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/layer/layim/layim.css">
+    <link rel="stylesheet" href="../assets/css/webim_demo.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+</head>
+<body>
+<div class="modal fade" id="set_profile_portrait_dialog" tabindex="-1" role="dialog" aria-labelledby="set_profile_portrait_label" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="set_profile_portrait_label">
+                    设置个人资料
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form" onkeydown="if(event.keyCode==13)return false;" id="spp_form" name="spp_form">
+                    <div class="form-group">
+                        <label for="spp_image" class="col-sm-2 control-label">头像URL</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="spp_image" placeholder="请输入头像URL" maxlength="100">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="spp_nick" class="col-sm-2 control-label">昵称</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="spp_nick" placeholder="请输入昵称" maxlength="20">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="spp_gender_radio" class="col-sm-2 control-label">性别</label>
+
+                        <div class="col-sm-10">
+
+                            <label class="radio-inline">
+                                <input type="radio" name="spp_gender_radio" id="spp_gender_male_radio"
+                                       value="Gender_Type_Male"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="spp_gender_radio" id="spp_gender_female_radio"
+                                       value="Gender_Type_Female"> 女
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="spp_allow_type_radio" class="col-sm-2 control-label">加好友设置</label>
+
+                        <div class="col-sm-10">
+
+                            <label class="radio-inline">
+                                <input type="radio" name="spp_allow_type_radio" id="spp_allow_type_need_confirm_radio"
+                                       value="AllowType_Type_NeedConfirm"> 需要确认
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="spp_allow_type_radio" id="spp_allow_type_allow_any_radio"
+                                       value="AllowType_Type_AllowAny"> 允许任何人
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="spp_allow_type_radio" id="spp_allow_type_deny_any_radio"
+                                       value="AllowType_Type_DenyAny"> 拒绝任何人
+                            </label>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="setProfilePortrait()">
+                    提交
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<ul>
+    <li class="teacher-data" data-id="1">
+        <dl>
+            <dt class="teacher-data-img">
+                <img src="../assets/img/a1.jpg" alt="">
+            </dt>
+            <dd>乐乐</dd>
+            <dd></dd>
+        </dl>
+    </li>
+    <li class="teacher-data" data-id="2">
+        <dl>
+            <dt class="teacher-data-img">
+                <img src="../assets/img/a8.jpg" alt="">
+            </dt>
+            <dd>小久</dd>
+        </dl>
+    </li>
+    <li class="teacher-data" data-id="3">
+        <dl>
+            <dt class="teacher-data-img">
+                <img src="../assets/img/a3.jpg" alt="">
+            </dt>
+            <dd>sun</dd>
+        </dl>
+    </li>
+    <li class="teacher-data" data-id="5">
+        <dl>
+            <dt class="teacher-data-img">
+                <img src="../assets/img/a5.jpg" alt="">
+            </dt>
+            <dd>winson</dd>
+        </dl>
+    </li>
+    <li class="teacher-data" data-id="6">
+        <dl>
+            <dt class="teacher-data-img">
+                <img src="../assets/img/a4.jpg" alt="">
+            </dt>
+            <dd>hui</dd>
+        </dl>
+    </li>
+</ul>
+
+<script src="../js/plugins/web-storage-cache-master/web-storage-cache.js"></script>
+
+<script src="../assets/js/jquery.min.js"></script>
+   <!--web im sdk-->
+    <script type="text/javascript" src="../assets/js/sdk/webim.js"></script>
+    <script type="text/javascript" src="../assets/js/sdk/json2.js"></script>
+    <!--web im sdk 登录 示例代码-->
+    <script type="text/javascript" src="../assets/js/login/login.js"></script>
+ <!--web im 解析一条消息 示例代码-->
+    <script type="text/javascript" src="../assets/js/common/show_one_msg.js"></script>
+    <!--web im sdk 发送普通消息(文本和表情) api 示例代码-->
+    <script type="text/javascript" src="../assets/js/msg/send_common_msg.js"></script>
+    <!--web im sdk 上传和发送图片消息 api 示例代码-->
+    <script type="text/javascript" src="../assets/js/msg/upload_and_send_pic_msg.js"></script>
+    <!--用于获取文件MD5，上传图片需要先获取文件的MD5-->
+    <script type="text/javascript" src="../assets/js/md5/spark-md5.js"></script>
+    <!--web im sdk 上传和发送文件消息 api 示例代码-->
+    <script type="text/javascript" src="../assets/js/msg/upload_and_send_file_msg.js"></script>
+    <!--web im 监听新消息(c2c或群) 示例代码-->
+    <script type="text/javascript" src="../assets/js/msg/receive_new_msg.js"></script>
+    <!--web im sdk 获取c2c获取群组历史消息 示例代码-->
+    <script type="text/javascript" src="../assets/js/msg/get_history_msg.js"></script>
+        <!--web im sdk 资料管理 api 示例代码-->
+    <script type="text/javascript" src="../assets\js\profile\profile_manager.js"></script>
+    <!--web im 切换聊天好友或群组 示例代码-->
+    <script type="text/javascript" src="../assets/js/switch_chat_obj.js"></script>
+    <script src="../assets/js/script.js"></script>
+     <!--web im 切换聊天好友或群组 示例代码-->
+    <script type="text/javascript" src="../assets/js/recentcontact/recent_contact_list_manager.js"></script>
+    <script src="../assets/js/chat.js"></script>
+
+</body>
+</html>

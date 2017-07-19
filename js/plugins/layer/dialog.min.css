@@ -1,0 +1,1 @@
+.sdmask{filter:alpha(opacity=0);-moz-opacity:0;opacity:0}.sdcontent{position:fixed;top:50%;z-index:1002;left:15px;right:15px}.sdinnerContent{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;overflow:hidden}.sdcontentMask{position:fixed;background:#030d13;left:0;right:0;top:0;bottom:0;filter:alpha(opacity=.5);-moz-opacity:.5;opacity:.78;z-index:1000}

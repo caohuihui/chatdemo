@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>注册</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="js/plugins/layer/skin/layer.css"/>
+    <style type="text/css">
+      .bind-button{
+        display: flex;
+        float: right;
+      }
+    </style>
+  <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <script src="js/plugins/Respond-master/dest/respond.min.js"></script>
+  <![endif]-->
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+
+
+              <h2 class="">欢迎注册</h2>
+
+
+
+            <p>创建一个新账户</p>
+            <form class="m-t" role="form">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="请输入用户名" id="userName" required data-vaild="\S" data-errmsg="用户名不能为空"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="请输入密码" id="password" required data-vaild="^[a-zA-Z0-9]{6,16}$" data-errmsg="密码不正确，请输入6-16位数字或字母"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="请再次输入密码" id="newPassword" required  data-errmsg="密码不正确，请输入6-16位数字或字母，两次密码输入不一致"/>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="请输入邮箱email" id="newEmail" required data-vaild="^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$" data-errmsg="邮箱不正确" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="请输入手机号" id="phone" required data-vaild="^1[3|4|5|7|8]\d{9}$" data-errmsg="手机号码不正确" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                </div>
+                <div class="form-group">
+                  <input  type="text" id="verify" class="form-control" placeholder="请输入验证码" style="width: 50%;display: inline-block;margin-right: 25%" required data-vaild="^\d{4}$" data-errmsg="验证码号码不正确，仅能包含4位数字"/>
+                  <div class="bind-button" style="width: 25%">
+                      <!--<input type="button" class="button" id="sendcun" style="color: #999;border: 1px solid #999;font-size: .6rem;width: 3.5rem;padding: 0 .2rem" @click.stop.prevent="sendphone()" value="发送验证码"/>-->
+                    <input type="button" class="btn btn-primary" style="width: 100%;text-align: center;padding: 6px 2px;background: #c6a770;border: 1px solid #c6a770;border-radius: 3px" id="sendcun" value="发送验证码"/>
+                  </div>
+                </div>
+                <div class="form-group text-left">
+                    <div class="checkbox i-checks">
+                        <label class="no-padding">
+                            <input type="checkbox"><i></i> 我同意注册协议</label>
+                    </div>
+                </div>
+                <input style="width: 100%;margin-bottom: 15px" type="button" class="btn btn-primary" id="registerSubmit" value="注 册"/>
+
+                <p class="text-muted text-center"><small>已经有账户了？</small><a href="login.html">点此登录</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/Bootstrap_popover.js"></script>
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/plugins/layer/layer.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $("form").Vaild();
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green'
+            });
+
+          let rS = document.getElementById('registerSubmit');
+          if (rS.addEventListener) {
+            rS.addEventListener('click', registerS, false)
+          }else {
+            rs.attachEvent('onclick', registerS, false)
+          }
+
+          let nP = document.getElementById('newPassword');
+          if (nP.addEventListener) {
+            nP.addEventListener('blur', newP, false)
+          }else {
+            nP.attachEvent('onblur', newP, false)
+          }
+
+          let sP = document.getElementById('sendcun');
+          if (sP.addEventListener) {
+            sP.addEventListener('click', sendphone, false)
+          }else {
+            sP.attachEvent('onclick', sendphone, false)
+          }
+          /*$('#registerSubmit').addEventListener('click', function () {
+            if($('#userName').val() !== '' && $('#password').val() !== '' && $('#newPassword').val() !== '' && $('#verify') !== '' && $('#phone').val() !== '' && $('#newEmail').val() !== ''){
+              console.log('aaaa');
+              $.ajax({
+                url: 'http://devs.lumen.com/api/users',
+                type:'POST',
+                data:{
+                  email: $('#newEmail').val(),
+                  name: $('#userName').val(),
+                  password: $('#newPassword').val()
+                },
+                dataType:'json',
+                success:function(msg){
+                  console.log('msg', msg)
+                  layer.msg(msg)
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                  console.log("获取失败，请重试！CODE:"+XMLHttpRequest.status)
+                  layer.msg("获取失败，请重试！CODE:"+XMLHttpRequest.status)
+                }
+              });
+//                    window.location = "login.html";
+            }else{
+              console.log('bbbbb');
+            }
+          }, false);
+          $('#newPassword').addEventListener('blur', function () {
+            if ($('#password').val() !== $('#newPassword').val() || !/^[a-zA-Z0-9]{6,16}$/.test($("#newPassword").val())) {
+              console.log('nnnnnn');
+//              $('#newPassword').attr('data-errmsg', '密码不一致')
+              $(this).parent().addClass("has-error").removeClass("has-success");
+              $(this).data("toogle", "top").data("placement", "top").data("container", "body").data("content", '密码不正确，请输入6-16位数字或字母，两次密码输入不一致').popover({"trigger":"manual"}).popover("show");
+            }else {
+              $(this).parent().removeClass("has-error").addClass("has-success");
+              $(this).popover("destroy");
+            }
+          }, false);*/
+
+
+        });
+
+        function registerS () {
+          if ($('#userName').val() === '') {
+            $('#userName').parent().addClass("has-error").removeClass("has-success");
+            $('#userName').data("toogle", "top").data("placement", "top").data("container", "body").data("content", '请输入用户名').popover({"trigger":"manual"}).popover("show");
+            return
+          }
+          if ($('#password').val() === '') {
+            $('#password').parent().addClass("has-error").removeClass("has-success");
+            $('#password').data("toogle", "top").data("placement", "top").data("container", "body").data("content", '请输入密码').popover({"trigger":"manual"}).popover("show");
+            return
+          }
+          if ($('#newPassword').val() === '') {
+            $('#newPassword').parent().addClass("has-error").removeClass("has-success");
+            $('#newPassword').data("toogle", "top").data("placement", "top").data("container", "body").data("content", '请再次输入密码').popover({"trigger":"manual"}).popover("show");
+            return
+          }
+          if ($('#newEmail').val() === '') {
+            $('#newEmail').parent().addClass("has-error").removeClass("has-success");
+            $('#newEmail').data("toogle", "top").data("placement", "top").data("container", "body").data("content", '请输入邮箱').popover({"trigger":"manual"}).popover("show");
+            return
+          }
+          if ($('#phone').val() === '') {
+            $('#phone').parent().addClass("has-error").removeClass("has-success");
+            $('#phone').data("toogle", "top").data("placement", "top").data("container", "body").data("content", '请输入手机号').popover({"trigger":"manual"}).popover("show");
+            return
+          }
+          if ($('#verify').val() === '') {
+            $('#verify').parent().addClass("has-error").removeClass("has-success");
+            $('#verify').data("toogle", "top").data("placement", "top").data("container", "body").data("content", '请输入验证码').popover({"trigger":"manual"}).popover("show");
+            return
+          }
+          if (!$("input[type='checkbox']").is(':checked')) {
+            layer.msg('请同意注册协议');
+            return
+          }
+          if($('#userName').val() !== '' && $('#password').val() !== '' && $('#newPassword').val() !== '' && $('#verify').val() !== '' && $('#phone').val() !== '' && $('#newEmail').val() !== ''&& $("input[type='checkbox']").is(':checked')){
+            console.log('aaaa');
+            console.log(new Date());
+            $.ajax({
+//              url: 'http://devs.lumen.com/api/validate/' + $('#phone').val() + '/' + $('#verify').val() + '#' + new Date(),
+              url: 'http://www.51daxuetong.cn/api/validate/' + $('#phone').val() + '/' + $('#verify').val() + '?' + new Date(),
+              type: 'GET',
+              dataType: 'json',
+              withCredentials: true,
+              success: function (msg) {
+                if (msg.status_code === 200) {
+                  layer.msg(msg.message)
+                  $.ajax({
+//              url: 'http://devs.lumen.com/api/user/register',
+                    url: 'http://www.51daxuetong.cn/api/user/register',
+                    type:'POST',
+                    data:{
+                      email: $('#newEmail').val(),
+                      name: $('#userName').val(),
+                      password: $('#newPassword').val()
+                    },
+                    dataType:'json',
+                    withCredentials:true,
+                    success:function(msg){
+                      console.log('msg', msg);
+                      if (msg.status_code === 200) {
+                        window.location = "login.html";
+                      }else {
+                        layer.msg(msg.message);
+                      }
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown){
+                      console.log("获取失败，请重试！CODE:"+XMLHttpRequest.status);
+                      layer.msg("获取失败，请重试！CODE:"+XMLHttpRequest.status);
+                    }
+                  });
+                } else {
+                  layer.msg(msg.message)
+                }
+              },
+              error:function(XMLHttpRequest, textStatus, errorThrown){
+                console.log("获取失败，请重试！CODE:"+XMLHttpRequest.status);
+                layer.msg("获取失败，请重试！CODE:"+XMLHttpRequest.status);
+              }
+            });
+//
+          }else{
+            console.log('bbbbb');
+          }
+        }
+
+        function newP () {
+          if ($('#password').val() !== $('#newPassword').val() || !/^[a-zA-Z0-9]{6,16}$/.test($("#newPassword").val())) {
+            console.log('nnnnnn');
+//              $('#newPassword').attr('data-errmsg', '密码不一致')
+            $(this).parent().addClass("has-error").removeClass("has-success");
+            $(this).data("toogle", "top").data("placement", "top").data("container", "body").data("content", '再次输入密码不正确，请输入6-16位数字或字母或两次密码输入不一致').popover({"trigger":"manual"}).popover("show");
+          }else {
+            $(this).parent().removeClass("has-error").addClass("has-success");
+            $(this).popover("destroy");
+          }
+        }
+
+      function sendphone () {
+          if ($('#phone').val() === '') {
+//            let butp = document.getElementById('phone')
+            $('#phone').parent().addClass("has-error").removeClass("has-success");
+            $('#phone').data("toogle", "top").data("placement", "top").data("container", "body").data("content", '请输入手机号码').popover({"trigger":"manual"}).popover("show");
+            return
+          }
+        $.ajax({
+//          url: 'http://192.168.100.77/api/sendcode/' + $('#phone').val(),
+          url: 'http://www.51daxuetong.cn/api/sendcode/' + $('#phone').val(),
+          type:'GET',
+          dataType:'json',
+          withCredentials:true,
+          success:function(msg){
+            console.log('msg', msg);
+            if (msg.status_code === 200) {
+              layer.msg('短信发送成功，请查阅手机');
+            } else {
+              layer.msg(msg.message);
+            }
+          },
+          error:function(XMLHttpRequest, textStatus, errorThrown){
+            console.log("获取失败，请重试！CODE:"+XMLHttpRequest.status);
+            layer.msg("获取失败，请重试！CODE:"+XMLHttpRequest.status);
+          }
+        });
+          let downcount = 60;
+          let time = setInterval(function (){
+            if (downcount === 0) {
+              $("#sendcun").attr("value", "发送验证码");
+              $("#sendcun").removeAttr("disabled");
+              clearInterval(time);
+              return
+            }else {
+              $("#sendcun").attr("disabled", "disabled");
+              $("#sendcun").attr("value", downcount + "s");
+              downcount--;
+            }
+          }, 1000);
+      }
+
+
+    </script>
+
+    <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+    <!--统计代码，可删除-->
+
+</body>
+
+</html>
